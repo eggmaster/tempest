@@ -1,4 +1,6 @@
-Name:           openstack-tempest
+%global project tempest
+
+Name:           openstack-%{project}
 Epoch:          1
 Version:        XXX
 Release:        XXX
@@ -58,23 +60,35 @@ other specific tests useful in validating an OpenStack deployment.
 %prep
 %setup -q -n tempest-%{upstream_version}
 # remove shebangs and fix permissions
-RPMLINT_OFFENDERS="tempest/cmd/cleanup_service.py tempest/common/api_discovery.py tempest/stress/cleanup.py"
+RPMLINT_OFFENDERS="tempest/cmd/cleanup_service.py tempest/stress/cleanup.py"
 sed -i '1{/^#!/d}' $RPMLINT_OFFENDERS
 chmod u=rw,go=r $RPMLINT_OFFENDERS
 
 %install
 mkdir -p %{buildroot}%{_datarootdir}/%{name}-%{version}
 cp --preserve=mode -r . %{buildroot}%{_datarootdir}/%{name}-%{version}
+%{__python} setup.py install --skip-build --root %{buildroot}
+mkdir -p %{buildroot}/etc/tempest
+mv %{buildroot}/usr/etc/tempest/* %{buildroot}/etc/tempest
 
 %build
+%{__python} setup.py build
 
 %files
 %license LICENSE
 %defattr(-,root,root)
 %{_datarootdir}/%{name}-%{version}
-%exclude %{_datarootdir}/%{name}-%{version}/.gitignore
-%exclude %{_datarootdir}/%{name}-%{version}/.gitreview
 %exclude %{_datarootdir}/%{name}-%{version}/.mailmap
 %exclude %{_datarootdir}/%{name}-%{version}/.coveragerc
+%{_bindir}/tempest
+%{_bindir}/javelin2
+%{_bindir}/run-tempest-stress
+%{_bindir}/tempest-account-generator
+%{_bindir}/tempest-cleanup
+%{_bindir}/verify-tempest-config
+%{python2_sitelib}/%{project}
+%{python2_sitelib}/%{project}*.egg-info
+%{_sysconfdir}/%{project}/*sample
+%{_sysconfdir}/%{project}/*yaml
 
 %changelog
