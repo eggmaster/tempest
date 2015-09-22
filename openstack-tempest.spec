@@ -21,30 +21,40 @@ Requires:       python
 Requires:       python-anyjson
 Requires:       python-boto
 Requires:       python-cinderclient
+Requires:       python-cliff
 Requires:       python-fixtures
 Requires:       python-glanceclient
 Requires:       python-heatclient
 Requires:       python-ironicclient
 Requires:       python-iso8601
+Requires:       python-jsonschema
 Requires:       python-junitxml
 Requires:       python-keyring
 Requires:       python-keystoneclient
 Requires:       python-lxml
-Requires:       python-netaddr
+Requires:       python-netaddr >= 0.7.12
 Requires:       python-neutronclient
 Requires:       python-nose
 Requires:       python-novaclient
-Requires:       python-oslo-config
+Requires:       python-oslo-concurrency >= 2.3.0
+Requires:       python-oslo-config >= 2.3.0
+Requires:       python-oslo-i18n >= 1.5.0
+Requires:       python-oslo-log >= 1.8.0
+Requires:       python-oslo-serialization >= 1.4.0
+Requires:       python-oslo-utils >= 2.0.0
 Requires:       python-paramiko
 Requires:       python-pbr
 Requires:       python-saharaclient
+Requires:       python-six >= 1.9.0
 Requires:       python-swiftclient
+Requires:       python-stevedore
 Requires:       python-testrepository
 Requires:       python-testresources
 Requires:       python-testscenarios
 Requires:       python-testtools
+Requires:       PyYAML
 Requires:       which
-Requires:       python-tempest-lib >= 0.4.0
+Requires:       python-tempest-lib >= 0.6.1
 Requires:       subunit-filters
 
 Provides:       openstack-tempest-kilo
@@ -90,5 +100,6 @@ mv %{buildroot}/usr/etc/tempest/* %{buildroot}/etc/tempest
 %{python2_sitelib}/%{project}*.egg-info
 %{_sysconfdir}/%{project}/*sample
 %{_sysconfdir}/%{project}/*yaml
+%{_sysconfdir}/%{project}/*.conf
 
 %changelog
